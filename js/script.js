@@ -317,9 +317,9 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    fetch('http://localhost:3000/menu')
+    fetch('http://localhost:3000/requests')
         .then(data => data.json())
-    // .then(res => console.log(res))
+        .then(res => console.log(res))
 
     //Слайды
 
@@ -327,48 +327,99 @@ window.addEventListener('DOMContentLoaded', () => {
         currentIndex = document.querySelector('#current'),
         totalIndex = document.querySelector('#total'),
         nextSlider = document.querySelector('.offer__slider-next'),
-        Sliders = document.querySelectorAll('.offer__slide');
-    let counter = 0;
+        Sliders = document.querySelectorAll('.offer__slide'),
+        slidersWrapper = document.querySelector('.offer__slider-wrapper'),
+        slidersField = document.querySelector('.offer__slider-inner'),
+        width = window.getComputedStyle(slidersWrapper).width;
+    let counter = 1,
+        offset = 0;
 
+     totalIndex.innerHTML = `${getZero(Sliders.length)}`;
 
-    currentIndex.innerHTML = ``;
-    totalIndex.innerHTML = `${getZero(Sliders.length)}`;
+    slidersField.style.width = 100 * Sliders.length + '%';
+    slidersField.style.display = 'flex';
+    slidersField.style.transition = '0.5s all';
 
-    showSlider(0);
+    slidersWrapper.style.overflow = 'hidden';
 
-    function showSlider(i) {
-        currentIndex.innerHTML = `${getZero(i + 1)}`;
-        Sliders.forEach((item, index) => {
-            if (index == i) {
-                item.classList.remove('hide');
-                item.classList.add('show', 'fade');
-            } else {
-                item.classList.remove('show');
-                item.classList.add('hide', 'fade')
-            }
-        })
-
-    }//просто так включил
-
-    // console.log(Sliders.length);
-    // console.log(Sliders)
+    Sliders.forEach(slider => slider.style.width = width);
 
     nextSlider.addEventListener('click', () => {
-        if (counter == Sliders.length - 1) {
-            counter = 0;
-            showSlider(counter);
+        if (offset == +width.slice(0, width.length - 2) * (Sliders.length - 1)) {
+            offset = 0;
         } else {
-            showSlider(++counter);
+            offset += +width.slice(0, width.length - 2);
         }
+
+        slidersField.style.transform = `translateX(-${offset}px)`;
+
+        if (counter == Sliders.length) {
+            counter = 1;
+        } else {
+            counter++;
+        }
+
+        currentIndex.textContent = `${getZero(counter)}`;
+
     });
 
     prevSlider.addEventListener('click', () => {
-        if (counter == 0) {
-            counter = Sliders.length - 1;
-            showSlider(counter);
+        if (offset == 0) {
+            offset = +width.slice(0, width.length - 2) * (Sliders.length - 1);
         } else {
-            showSlider(--counter);
+            offset -= +width.slice(0, width.length - 2);
         }
-    })
+
+        slidersField.style.transform = `translateX(-${offset}px)`;
+
+        if (counter == 1) {
+            counter = Sliders.length;
+        } else {
+            counter--;
+        }
+
+        currentIndex.textContent = `${getZero(counter)}`;
+
+    });
+
+    // currentIndex.innerHTML = ``;
+    // totalIndex.innerHTML = `${getZero(Sliders.length)}`;
+
+    // showSlider(0);
+
+    // function showSlider(i) {
+    //     currentIndex.innerHTML = `${getZero(i + 1)}`;
+    //     Sliders.forEach((item, index) => {
+    //         if (index == i) {
+    //             item.classList.remove('hide');
+    //             item.classList.add('show', 'fade');
+    //         } else {
+    //             item.classList.remove('show');
+    //             item.classList.add('hide', 'fade')
+    //         }
+    //     })
+
+    // }//просто так включил
+
+    // // console.log(Sliders.length);
+    // // console.log(Sliders)
+
+    // nextSlider.addEventListener('click', () => {
+    //     if (counter == Sliders.length - 1) {
+    //         counter = 0;
+    //         showSlider(counter);
+    //     } else {
+    //         showSlider(++counter);
+    //     }
+    // });
+
+    // prevSlider.addEventListener('click', () => {
+    //     if (counter == 0) {
+    //         counter = Sliders.length - 1;
+    //         showSlider(counter);
+    //     } else {
+    //         showSlider(--counter);
+    //     }
+    // })
 
 });
