@@ -335,20 +335,23 @@ window.addEventListener('DOMContentLoaded', () => {
     let counter = 1,
         offset = 0;
 
+        console.log(width);     
+
     totalIndex.innerHTML = `${getZero(Sliders.length)}`;
 
     slidersField.style.width = 100 * Sliders.length + '%';
     slidersField.style.display = 'flex';
     slidersField.style.transition = '0.5s all';
 
-    slidersWrapper.style.overflow = 'hidden';
 
-    Sliders.forEach(slider => slider.style.width = width);
+    Sliders.forEach(slider => slider.style.width = width);   
 
     slider.style.position = 'relative';
 
     const indicators = document.createElement('ol'),
-        dots = [];
+          dots = [];//массив для хранения точек 
+          //нужен для того чтобы для всех эелементов поставить одинкавый opacity
+          //а потом дял конкретного сделать этот парматер больше
     indicators.classList.add('carousel-indicators');
     indicators.style.cssText = `
         position: absolute;
@@ -362,7 +365,7 @@ window.addEventListener('DOMContentLoaded', () => {
         margin-left: 15%;
         list-style: none;
     `;
-    slider.append(indicators);
+    slider.append(indicators);// создаем типа поле для хранения наших навигационных точек 
 
     for (let i = 0; i < Sliders.length; i++) {
         const dot = document.createElement('li');
@@ -385,9 +388,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (i == 0) {
             dot.style.opacity = 1;
-        }
+        }//подсвечивает первую точку потому что при заходе на стр энивей будет первый элемент
         indicators.append(dot);
-        dots.push(dot);
+        dots.push(dot);//пушим куждую точку в массив
     }
 
     function forDots(dots, opacity) {
@@ -395,11 +398,11 @@ window.addEventListener('DOMContentLoaded', () => {
             dot.style.opacity = opacity
         });
         dots[counter - 1].style.opacity = 1;
-    }
+    }//функция для динамического оперделения активной точки
 
     nextSlider.addEventListener('click', () => {
         if (offset == +width.slice(0, width.length - 2) * (Sliders.length - 1)) {
-            offset = 0;
+            offset = 0;//   
         } else {
             offset += +width.slice(0, width.length - 2);
         }
