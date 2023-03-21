@@ -468,50 +468,65 @@ window.addEventListener('DOMContentLoaded', () => {
     let sex = 'female',
         height, weight, age,
         cef = 1.375;
+        //присвоили значения для того чтоб на странице уэе были какие=то ккал
 
     function calcTotal() {
         if (!sex || !height || !weight || !age || !cef) {
             result.textContent = 'Ты даун';
+            //если у нас не определены какие-то данные в спан запишется ты даун
             return;
         }
         if (sex === 'female') {
             result.textContent = Math.round((447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age)) * cef);
+            //формула подсчета ккал для мужчин
         } else {
             result.textContent = Math.round((88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age)) * cef);
+            //для женщин
         }
     }
+    //фция подставляет все введенные данные в формулу и выводит в спан
 
 
     function getStaticInformation(parentSelector, activeClass) {
         const elements = document.querySelectorAll(`${parentSelector} div`);
+        //выбираем элементы на которые будем вешать обработчики событий
 
         elements.forEach(element => {
             element.addEventListener('click', (e) => {
                 if (e.target.getAttribute('data-cef')) {
                     cef = +e.target.getAttribute('data-cef');
+                    //если мы работаем с элементами физической активности
+                    //тогда cef присваивается значение коэффициента
                 } else {
                     sex = e.target.getAttribute('id');
+                    //если же с полом (М-Ж) тогда sex присваивается айдишник элемента 
+                    //на который кликнули (male of famale)
                 }
     
                 console.log(cef, sex);
     
                 elements.forEach(el => {
                     el.classList.remove(activeClass);
-                });
+                });//удаляем для всех класс активности
     
                 e.target.classList.add(activeClass);
+                //и ставим класс активности для элемента на который кликнули
     
             calcTotal();
+            //вызываем эту фцию чтобы она сраву же подсчитывала новые значения и выводила их в спан
                 
             }); 
         });
 
     }
-    getStaticInformation('#gender', 'calculating__choose-item_active');
-    getStaticInformation('#activity', 'calculating__choose-item_active');
+    //функция для работы над , хуй его , над тем, что надо выбирать а не вводить
+
+    getStaticInformation('#gender', 'calculating__choose-item_active');//вызываем фцию для работы над полом
+    getStaticInformation('#activity', 'calculating__choose-item_active');//над физической активностью
 
     function getInput(selector) {
         const input = document.querySelector(selector);
+        //помещаем в input инпут с страницы
 
         input.addEventListener('input', () => {
             switch (input.getAttribute('id')) {
@@ -531,6 +546,7 @@ window.addEventListener('DOMContentLoaded', () => {
                     break;
 
             }
+            //назначаем обработчик события который срабатыает при кадждом изминении инпута
             calcTotal();
         })
     }
