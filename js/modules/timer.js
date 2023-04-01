@@ -1,7 +1,13 @@
-function timer() {
-    //Timer
-    const deadline = '2023-4-20';
+function getZero(num) {
+    if (num >= 0 && num < 10) {
+        return `0${num}`;
+    } else {
+        return num;
+    }
+}
 
+function timer(timerSelector, deadline) {
+    //Timer
     function getTimeRemaining(endtime) {
         let days, hours, minutes, seconds;
         // const t = new Date(endtime);
@@ -25,14 +31,6 @@ function timer() {
             'hours': hours,
             'minutes': minutes,
             'seconds': seconds
-        }
-    }
-
-    function getZero(num) {
-        if (num >= 0 && num < 10) {
-            return `0${num}`;
-        } else {
-            return num;
         }
     }
 
@@ -61,8 +59,9 @@ function timer() {
 
     }
 
-    setClock('.timer', deadline);
+    setClock(timerSelector, deadline);
 
 }
 
-module.exports = timer;
+export default timer;
+export {getZero}

@@ -1,3 +1,5 @@
+import { getResourse } from "../services/services";
+
 function cards() {
     // Используем классы для карточек 
 
@@ -34,45 +36,38 @@ function cards() {
 
     }
 
-    const getResourse = async (url) => {
-        const res = await fetch(url);
 
-        if (!res.ok) {
-            throw new Error(`Could not fetch status: ${res.status}`)
-        }//ессли у нас "не успещно" тогда выбросит ошибку 
-
-        return await res.json();
-    }
-
-    // getResourse('http://localhost:3000/menu')
-    //     .then(data => data.forEach(obj => {
-    //         new MenuCard(
-    //             obj.img,
-    //             obj.altimg,
-    //             obj.title,
-    //             obj.descr,
-    //             obj.price,
-    //             '.menu .container'
-    //         ).render();
-    //     }));
+    getResourse('http://localhost:3000/menu')
+        .then(data => data.forEach(obj => {
+            new MenuCard(
+                obj.img,
+                obj.altimg,
+                obj.title,
+                obj.descr,
+                obj.price,
+                '.menu .container'
+            ).render();
+        }));
     // сначало мы получаем данные из сервера 
     // из сервера по этому юрл пришел массив из обьектов который мы перебираем
     // и создаем из каждого обьекта конструктор на основе класса MenuCard и аппендим его на страницу с помощью render()
 
-    axios.get('http://localhost:3000/menu')
-        .then(data => {
-            data.data.forEach(obj => {
-                new MenuCard(
-                    obj.img,
-                    obj.altimg,
-                    obj.title,
-                    obj.descr,
-                    obj.price,
-                    '.menu .container'
-                ).render();
-            })
-        });
+    // axios.get('http://localhost:3000/menu')
+    //     .then(data => {
+    //         data.data.forEach(obj => {
+    //             new MenuCard(
+    //                 obj.img,
+    //                 obj.altimg,
+    //                 obj.title,
+    //                 obj.descr,
+    //                 obj.price,
+    //                 '.menu .container'
+    //             ).render();
+    //         })
+    //     });
+    //это корчое я забыл как оно работает, но это
+    //библиотека которая облегчает получение эелентов с сервера и дает вроде больше возможностей
 
 }
 
-module.exports = cards;
+export default cards;
