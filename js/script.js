@@ -6,8 +6,9 @@ import modal from './modules/modal';
 import slides from './modules/slides';
 import timer from './modules/timer';
 import { showModal } from './modules/modal';
-window.addEventListener('DOMContentLoaded', () => {
 
+window.addEventListener('DOMContentLoaded', () => {
+    
     const modalTimerId = setTimeout(() => showModal('.modal', modalTimerId), 3000);
 
     tabs('.tabheader__item', '.tabcontent', '.tabheader__items', 'tabheader__item_active');

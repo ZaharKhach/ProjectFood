@@ -1,4 +1,7 @@
+import {Zahar} from './zahar'
+
 function tabs(tabsSelector, tabsContentSelector, tabsParentSelector, activeClass) {
+    console.log(Zahar);
     //Tabs
     const tabs = document.querySelectorAll(tabsSelector),
         tabsContent = document.querySelectorAll(tabsContentSelector),

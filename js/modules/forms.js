@@ -31,7 +31,11 @@ function forms(formSelector, modalTimerId) {
 
             const formData = new FormData(form);
 
+            console.log(formData);
+        
+
             const json = JSON.stringify(Object.fromEntries(formData.entries()));
+            console.log(json);
             //сначало берем данные с формы превращаем их в массив массивов
             //потом превращаем этот массив в обычный обьект 
             //и в конце превращаем его в джсон обьект который можно отправить на сервер
@@ -39,7 +43,7 @@ function forms(formSelector, modalTimerId) {
 
             postData('http://localhost:3000/requests', json)
                 .then(data => {
-                    console.log(data);
+                    console.log(data);  
                     showThanksModal(massange.success);
                     form.reset();
                     statusMessage.remove();
